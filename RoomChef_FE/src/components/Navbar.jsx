@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../store/authSlice'
 
-export default function Navbar({ activeTab, setActiveTab, onOpenChat }) {
+export default function Navbar({ activeTab, setActiveTab }) {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
@@ -11,8 +11,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenChat }) {
       <div className="nav-container">
         <div className="nav-brand" onClick={() => setActiveTab('recipes')}>
           <span className="brand-icon">🍳</span>
-          <span className="brand-title">방구석 셰프</span>
-          <span className="brand-badge">RoomChef</span>
+          <span className="brand-title">방구석 쉐프</span>
         </div>
 
         <div className="nav-links">
@@ -20,16 +19,13 @@ export default function Navbar({ activeTab, setActiveTab, onOpenChat }) {
             className={`nav-btn ${activeTab === 'recipes' ? 'active' : ''}`}
             onClick={() => setActiveTab('recipes')}
           >
-            📖 레시피 탐색
+            레시피 탐색
           </button>
           <button
             className={`nav-btn ${activeTab === 'fridge' ? 'active' : ''}`}
             onClick={() => setActiveTab('fridge')}
           >
-            🧊 냉장고 파먹기
-          </button>
-          <button className="nav-btn ai-btn" onClick={onOpenChat}>
-            🤖 AI 셰프 챗봇
+            냉장고 파먹기
           </button>
         </div>
 
