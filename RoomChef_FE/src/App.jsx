@@ -24,7 +24,6 @@ export default function App() {
           setSelectedRecipe(null)
           setActiveTab(tab)
         }}
-        onOpenChat={() => setShowChatModal(true)}
       />
 
       <main className="main-content">
@@ -51,6 +50,15 @@ export default function App() {
           <Login onSuccess={() => setActiveTab('recipes')} />
         ) : null}
       </main>
+
+      {/* 우측 하단 둥근 플로팅 챗봇 버튼 */}
+      <button
+        className="floating-chatbot-btn"
+        onClick={() => setShowChatModal(true)}
+        title="AI 챗봇 열기"
+      >
+        챗봇
+      </button>
 
       {/* 모달 컴포넌트들 */}
       {showChatModal && (
