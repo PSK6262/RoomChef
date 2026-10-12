@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EvaluationMapper">
+
+    <!-- 1~5점 평가 등록/수정 (MERGE INTO) -->
+    <insert id="insertOrUpdateEvaluation" parameterType="RecipeEvaluations">
+        MERGE INTO RECIPE_EVALUATIONS target
+        USING (SELECT #{userId} AS USER_ID, #{recipeId} AS RECIPE_ID FROM DUAL) src
+        ON (target.USER_ID = src.USER_ID AND target.RECIPE_ID = src.RECIPE_ID)
+        WHEN MATCHED THEN
+            UPDATE SET 
+                target.RATING = #{rating},
+                target.FEEDBACK_NOTE = #{feedbackNote},
+                target.EVALUATED_AT = SYSTIMESTAMP
+        WHEN NOT MATCHED THEN
+            INSERT (USER_ID, RECIPE_ID, RATING, FEEDBACK_NOTE, EVALUATED_AT)
+            VALUES (#{userId}, #{recipeId}, #{rating}, #{feedbackNote}, SYSTIMESTAMP)
+    </insert>
+
+    <select id="selectEvaluationByUserAndRecipe" parameterType="map" resultType="RecipeEvaluations">
+        SELECT EVAL_ID, USER_ID, RECIPE_ID, RATING, FEEDBACK_NOTE, EVALUATED_AT
+        FROM RECIPE_EVALUATIONS
+        WHERE USER_ID = #{userId} AND RECIPE_ID = #{recipeId}
+    </select>
+
+    <select id="selectEvaluationsByRecipeId" parameterType="long" resultType="RecipeEvaluations">
+        SELECT 
+            e.EVAL_ID, e.USER_ID, e.RECIPE_ID, e.RATING, e.FEEDBACK_NOTE, e.EVALUATED_AT,
+            u.NICKNAME AS USER_NICKNAME
+        FROM RECIPE_EVALUATIONS e
+        JOIN USERS u ON e.USER_ID = u.USER_ID
+        WHERE e.RECIPE_ID = #{recipeId}
+        ORDER BY e.EVALUATED_AT DESC
+    </select>
+
+    <!-- 스케줄러 일괄 갱신용: 레시피별 평균 평점 조회 -->
+    <select id="selectRecipeAvgRatings" resultType="map">
+        SELECT 
+            RECIPE_ID, 
+            ROUND(AVG(RATING), 2) AS AVG_RATING,
+            COUNT(*) AS EVAL_COUNT
+        FROM RECIPE_EVALUATIONS
+        GROUP BY RECIPE_ID
+    </select>
+
+    <update id="updateRecipeScoreWeight" parameterType="map">
+        UPDATE RECIPES
+        SET SCORE_WEIGHT = #{scoreWeight}
+        WHERE RECIPE_ID = #{recipeId}
+    </update>
+
+</mapper>

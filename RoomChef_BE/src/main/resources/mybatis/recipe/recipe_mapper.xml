@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RecipeMapper">
+
+    <resultMap id="RecipeWithIngredientsMap" type="Recipes">
+        <id property="recipeId" column="RECIPE_ID"/>
+        <result property="title" column="TITLE"/>
+        <result property="sourceType" column="SOURCE_TYPE"/>
+        <result property="channelName" column="CHANNEL_NAME"/>
+        <result property="videoUrl" column="VIDEO_URL"/>
+        <result property="thumbnailUrl" column="THUMBNAIL_URL"/>
+        <result property="cookTimeMin" column="COOK_TIME_MIN"/>
+        <result property="difficulty" column="DIFFICULTY"/>
+        <result property="servings" column="SERVINGS"/>
+        <result property="onePanYn" column="ONE_PAN_YN"/>
+        <result property="microwaveYn" column="MICROWAVE_YN"/>
+        <result property="scoreWeight" column="SCORE_WEIGHT"/>
+        <result property="viewCount" column="VIEW_COUNT"/>
+        <result property="avgRating" column="AVG_RATING"/>
+        <result property="evalCount" column="EVAL_COUNT"/>
+        <collection property="ingredients" ofType="RecipeIngredients">
+            <id property="ingredientId" column="INGREDIENT_ID"/>
+            <result property="recipeId" column="ING_RECIPE_ID"/>
+            <result property="ingredientName" column="INGREDIENT_NAME"/>
+            <result property="amount" column="AMOUNT"/>
+            <result property="unit" column="UNIT"/>
+            <result property="isEssential" column="IS_ESSENTIAL"/>
+            <result property="isBasicSauce" column="IS_BASIC_SAUCE"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectRecipeList" parameterType="map" resultType="Recipes">
+        SELECT 
+            r.RECIPE_ID, r.TITLE, r.SOURCE_TYPE, r.CHANNEL_NAME, 
+            r.VIDEO_URL, r.THUMBNAIL_URL, r.COOK_TIME_MIN, r.DIFFICULTY, 
+            r.SERVINGS, r.ONE_PAN_YN, r.MICROWAVE_YN, r.SCORE_WEIGHT, 
+            r.VIEW_COUNT, r.CREATED_AT,
+            NVL(ROUND(AVG(e.RATING), 1), 0.0) AS AVG_RATING,
+            COUNT(e.EVAL_ID) AS EVAL_COUNT
+        FROM RECIPES r
+        LEFT JOIN RECIPE_EVALUATIONS e ON r.RECIPE_ID = e.RECIPE_ID
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (r.TITLE LIKE '%' || #{keyword} || '%' OR r.CHANNEL_NAME LIKE '%' || #{keyword} || '%')
+            </if>
+            <if test="sourceType != null and sourceType != ''">
+                AND r.SOURCE_TYPE = #{sourceType}
+            </if>
+            <if test="difficulty != null and difficulty != ''">
+                AND r.DIFFICULTY = #{difficulty}
+            </if>
+            <if test="onePanYn != null and onePanYn != ''">
+                AND r.ONE_PAN_YN = #{onePanYn}
+            </if>
+        </where>
+        GROUP BY 
+            r.RECIPE_ID, r.TITLE, r.SOURCE_TYPE, r.CHANNEL_NAME, 
+            r.VIDEO_URL, r.THUMBNAIL_URL, r.COOK_TIME_MIN, r.DIFFICULTY, 
+            r.SERVINGS, r.ONE_PAN_YN, r.MICROWAVE_YN, r.SCORE_WEIGHT, 
+            r.VIEW_COUNT, r.CREATED_AT
+        ORDER BY r.SCORE_WEIGHT DESC, r.VIEW_COUNT DESC, r.RECIPE_ID DESC
+    </select>
+
+    <select id="selectRecipeById" parameterType="long" resultType="Recipes">
+        SELECT 
+            r.RECIPE_ID, r.TITLE, r.SOURCE_TYPE, r.CHANNEL_NAME, 
+            r.VIDEO_URL, r.THUMBNAIL_URL, r.COOK_TIME_MIN, r.DIFFICULTY, 
+            r.SERVINGS, r.ONE_PAN_YN, r.MICROWAVE_YN, r.SCORE_WEIGHT, 
+            r.VIEW_COUNT, r.CREATED_AT,
+            NVL(ROUND(AVG(e.RATING), 1), 0.0) AS AVG_RATING,
+            COUNT(e.EVAL_ID) AS EVAL_COUNT
+        FROM RECIPES r
+        LEFT JOIN RECIPE_EVALUATIONS e ON r.RECIPE_ID = e.RECIPE_ID
+        WHERE r.RECIPE_ID = #{recipeId}
+        GROUP BY 
+            r.RECIPE_ID, r.TITLE, r.SOURCE_TYPE, r.CHANNEL_NAME, 
+            r.VIDEO_URL, r.THUMBNAIL_URL, r.COOK_TIME_MIN, r.DIFFICULTY, 
+            r.SERVINGS, r.ONE_PAN_YN, r.MICROWAVE_YN, r.SCORE_WEIGHT, 
+            r.VIEW_COUNT, r.CREATED_AT
+    </select>
+
+    <select id="selectRecipeIngredients" parameterType="long" resultType="RecipeIngredients">
+        SELECT INGREDIENT_ID, RECIPE_ID, INGREDIENT_NAME, AMOUNT, UNIT, IS_ESSENTIAL, IS_BASIC_SAUCE
+        FROM RECIPE_INGREDIENTS
+        WHERE RECIPE_ID = #{recipeId}
+        ORDER BY IS_BASIC_SAUCE ASC, INGREDIENT_ID ASC
+    </select>
+
+    <select id="selectRecipeSteps" parameterType="long" resultType="RecipeSteps">
+        SELECT STEP_ID, RECIPE_ID, STEP_ORDER, INSTRUCTION, TIMER_SECONDS, TIP
+        FROM RECIPE_STEPS
+        WHERE RECIPE_ID = #{recipeId}
+        ORDER BY STEP_ORDER ASC
+    </select>
+
+    <select id="selectAllRecipesWithIngredients" resultMap="RecipeWithIngredientsMap">
+        SELECT 
+            r.RECIPE_ID, r.TITLE, r.SOURCE_TYPE, r.CHANNEL_NAME, 
+            r.VIDEO_URL, r.THUMBNAIL_URL, r.COOK_TIME_MIN, r.DIFFICULTY, 
+            r.SERVINGS, r.ONE_PAN_YN, r.MICROWAVE_YN, r.SCORE_WEIGHT, 
+            r.VIEW_COUNT,
+            i.INGREDIENT_ID, i.RECIPE_ID AS ING_RECIPE_ID, i.INGREDIENT_NAME, 
+            i.AMOUNT, i.UNIT, i.IS_ESSENTIAL, i.IS_BASIC_SAUCE
+        FROM RECIPES r
+        LEFT JOIN RECIPE_INGREDIENTS i ON r.RECIPE_ID = i.RECIPE_ID
+        ORDER BY r.SCORE_WEIGHT DESC, r.RECIPE_ID DESC
+    </select>
+
+    <insert id="insertRecipe" parameterType="Recipes" useGeneratedKeys="true" keyProperty="recipeId">
+        INSERT INTO RECIPES (
+            TITLE, SOURCE_TYPE, CHANNEL_NAME, VIDEO_URL, THUMBNAIL_URL,
+            COOK_TIME_MIN, DIFFICULTY, SERVINGS, ONE_PAN_YN, MICROWAVE_YN,
+            SCORE_WEIGHT, VIEW_COUNT, CREATED_AT
+        ) VALUES (
+            #{title}, #{sourceType}, #{channelName}, #{videoUrl}, #{thumbnailUrl},
+            #{cookTimeMin}, #{difficulty}, #{servings}, #{onePanYn}, #{microwaveYn},
+            1.0, 0, SYSTIMESTAMP
+        )
+    </insert>
+
+    <insert id="insertRecipeIngredient" parameterType="RecipeIngredients">
+        INSERT INTO RECIPE_INGREDIENTS (
+            RECIPE_ID, INGREDIENT_NAME, AMOUNT, UNIT, IS_ESSENTIAL, IS_BASIC_SAUCE
+        ) VALUES (
+            #{recipeId}, #{ingredientName}, #{amount}, #{unit}, #{isEssential}, #{isBasicSauce}
+        )
+    </insert>
+
+    <insert id="insertRecipeStep" parameterType="RecipeSteps">
+        INSERT INTO RECIPE_STEPS (
+            RECIPE_ID, STEP_ORDER, INSTRUCTION, TIMER_SECONDS, TIP
+        ) VALUES (
+            #{recipeId}, #{stepOrder}, #{instruction}, #{timerSeconds}, #{tip}
+        )
+    </insert>
+
+    <update id="incrementViewCount" parameterType="long">
+        UPDATE RECIPES SET VIEW_COUNT = VIEW_COUNT + 1 WHERE RECIPE_ID = #{recipeId}
+    </update>
+
+</mapper>

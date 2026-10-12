@@ -1,0 +1,753 @@
+/* Navbar */
+.navbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.brand-icon {
+  font-size: 1.8rem;
+}
+
+.brand-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.brand-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.nav-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: #f1f5f9;
+  color: var(--text-main);
+}
+
+.nav-btn.active {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.nav-btn.ai-btn {
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  color: #ffffff;
+}
+
+.nav-btn.ai-btn:hover {
+  opacity: 0.9;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.user-nickname {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.auth-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.375rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.auth-btn.login {
+  background: #1e293b;
+  color: white;
+}
+
+.auth-btn.logout {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* Page Container */
+.page-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  padding: 2.5rem;
+  border-radius: 1rem;
+  border: 1px solid #fed7aa;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero-banner h2 {
+  font-size: 1.8rem;
+  color: #9a3412;
+  margin-bottom: 0.5rem;
+}
+
+.hero-banner p {
+  color: #7c2d12;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar {
+  display: flex;
+  max-width: 600px;
+  margin: 0 auto 1.2rem;
+  background: white;
+  border-radius: 9999px;
+  padding: 0.3rem 0.5rem 0.3rem 1.2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  background: var(--primary);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: white;
+  border: 1px solid #fed7aa;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #7c2d12;
+}
+
+.chip.active {
+  background: #ea580c;
+  color: white;
+}
+
+/* Recipe Grid */
+.recipe-grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.sort-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Recipe Card */
+.recipe-card {
+  background: white;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+.card-thumb {
+  height: 160px;
+  background: #f1f5f9;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb-placeholder {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.thumb-tags {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.badge.onepan {
+  background: #0284c7;
+}
+
+.badge.microwave {
+  background: #8b5cf6;
+}
+
+.badge.ai-boost {
+  background: #f59e0b;
+}
+
+.card-body {
+  padding: 1.2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.8rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.rating-info {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.rating-info .star {
+  color: #f59e0b;
+}
+
+.rating-info .score {
+  font-weight: 700;
+}
+
+.rating-info .eval-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-rate {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.btn-cook {
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.375rem;
+  background: var(--primary);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal-content, .chatbot-modal {
+  background: white;
+  border-radius: 1rem;
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header, .chatbot-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.star-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.star-btn {
+  font-size: 2rem;
+  color: #cbd5e1;
+}
+
+.star-btn.active {
+  color: #f59e0b;
+}
+
+.rating-guide-box {
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.rating-guide-box.bonus {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.rating-guide-box.penalty {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.rating-guide-box.neutral {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+}
+
+.eval-textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+/* Cooking Mode */
+.cooking-backdrop {
+  position: fixed;
+  inset: 0;
+  background: #0f172a;
+  color: white;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cooking-container {
+  max-width: 700px;
+  width: 90%;
+  text-align: center;
+}
+
+.cooking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.btn-close-cooking {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.cooking-step-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.progress-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.progress-dot.current {
+  background: var(--primary);
+}
+
+.progress-dot.done {
+  background: #10b981;
+}
+
+.cooking-card {
+  background: #1e293b;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.step-number {
+  font-size: 1.1rem;
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.step-instruction {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.step-tip {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  color: #cbd5e1;
+  font-size: 1rem;
+}
+
+.step-timer-box {
+  margin-top: 1.5rem;
+}
+
+.timer-display {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fbbf24;
+  margin-bottom: 0.5rem;
+}
+
+.btn-timer {
+  background: var(--primary);
+  color: white;
+  padding: 0.8rem 1.8rem;
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.cooking-footer-controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-step {
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.btn-step.prev {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.btn-step.next {
+  background: var(--primary);
+  color: white;
+}
+
+/* Chatbot modal specific */
+.chatbot-modal {
+  max-width: 650px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatbot-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 0.2rem;
+}
+
+.chat-bubble.ai {
+  align-self: flex-start;
+  background: #f1f5f9;
+  color: var(--text-main);
+  border-bottom-left-radius: 0.2rem;
+}
+
+.recom-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recom-item {
+  border: 1px solid var(--border);
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.recom-match-badge.full {
+  background: #dcfce7;
+  color: #166534;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.recom-match-badge.partial {
+  background: #fef9c3;
+  color: #854d0e;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.chatbot-input-bar {
+  display: flex;
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.chatbot-input-bar input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem 0 0 0.5rem;
+  outline: none;
+}
+
+.chatbot-input-bar button {
+  background: var(--primary);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-weight: 700;
+}
+
+.quick-prompts {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-chip {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+}
+
+/* Fridge page */
+.fridge-hero {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.fridge-add-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.fridge-add-bar input {
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.fridge-add-bar input:first-child {
+  flex: 2;
+}
+
+.fridge-add-bar input:nth-child(2) {
+  flex: 1;
+}
+
+.fridge-add-bar button {
+  background: var(--primary);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+}
+
+.fridge-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.fridge-chip {
+  background: #f1f5f9;
+  padding: 0.5rem 0.9rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.chip-del {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.btn-match-run {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 800;
+  border-radius: 0.75rem;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  margin: 2rem 0 1rem;
+}

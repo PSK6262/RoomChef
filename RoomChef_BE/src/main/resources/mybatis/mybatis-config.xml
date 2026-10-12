@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>						
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"			
+					"http://mybatis.org/dtd/mybatis-3-config.dtd">
+					
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.app.dto.user.Users" alias="Users"/>
+		<typeAlias type="com.app.dto.user.APILogin" alias="APILogin"/>
+		<typeAlias type="com.app.dto.recipe.Recipes" alias="Recipes"/>
+		<typeAlias type="com.app.dto.recipe.RecipeIngredients" alias="RecipeIngredients"/>
+		<typeAlias type="com.app.dto.recipe.RecipeSteps" alias="RecipeSteps"/>
+		<typeAlias type="com.app.dto.fridge.FridgeIngredients" alias="FridgeIngredients"/>
+		<typeAlias type="com.app.dto.fridge.FridgeMatchResult" alias="FridgeMatchResult"/>
+		<typeAlias type="com.app.dto.evaluation.RecipeEvaluations" alias="RecipeEvaluations"/>
+	</typeAliases>
+	
+</configuration>

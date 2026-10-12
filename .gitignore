@@ -1,0 +1,30 @@
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Java & Build artifacts
+*.class
+bin/
+**/bin/
+target/
+**/target/
+
+# Node & Frontend artifacts
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# Sensitive properties (allow example templates)
+*.local.properties
+.env.local
+
+# IDE & Tooling Metadata
+.project
+.classpath
+.factorypath
+.settings/
+.idea/
+.vscode/
+*.iml

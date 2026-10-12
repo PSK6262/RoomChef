@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FridgeMapper">
+
+    <select id="selectIngredientsByUserId" parameterType="long" resultType="FridgeIngredients">
+        SELECT FRIDGE_ID, USER_ID, INGREDIENT_NAME, QUANTITY, EXPIRE_DATE, REGISTERED_AT
+        FROM FRIDGE_INGREDIENTS
+        WHERE USER_ID = #{userId}
+        ORDER BY EXPIRE_DATE ASC NULLS LAST, REGISTERED_AT DESC
+    </select>
+
+    <insert id="insertIngredient" parameterType="FridgeIngredients">
+        INSERT INTO FRIDGE_INGREDIENTS (
+            USER_ID, INGREDIENT_NAME, QUANTITY, EXPIRE_DATE, REGISTERED_AT
+        ) VALUES (
+            #{userId}, #{ingredientName}, #{quantity}, #{expireDate}, SYSTIMESTAMP
+        )
+    </insert>
+
+    <delete id="deleteIngredient" parameterType="map">
+        DELETE FROM FRIDGE_INGREDIENTS
+        WHERE FRIDGE_ID = #{fridgeId} AND USER_ID = #{userId}
+    </delete>
+
+    <delete id="deleteAllIngredients" parameterType="long">
+        DELETE FROM FRIDGE_INGREDIENTS
+        WHERE USER_ID = #{userId}
+    </delete>
+
+</mapper>
